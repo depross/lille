@@ -140,8 +140,14 @@
 
   details > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
   details > summary::-webkit-details-marker { display: none; }
-  details > summary::after { content: "+"; color: var(--muted); font-weight: 300; font-size: 18px; }
-  details[open] > summary::after { content: "–"; }
+  details > summary::after {
+    content: ""; width: 7px; height: 7px; flex: 0 0 auto; margin-left: auto;
+    border-right: 1px solid var(--muted); border-bottom: 1px solid var(--muted);
+    transform: translateY(-2px) rotate(45deg); transition: transform .25s ease;
+  }
+  details[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+  details > summary:hover::after { border-color: var(--fg); }
+  .more > summary::after, .slot > summary::after { margin-left: 2px; width: 6px; height: 6px; }
   .prep-count { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: auto; margin-right: 14px; font-variant-numeric: tabular-nums; }
   .prep-count.done { color: var(--orange); }
   .checks { display: grid; gap: 22px; padding-top: 18px; }
