@@ -63,7 +63,7 @@
     padding-block: 12px;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-  .brand { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 400; white-space: nowrap; }
+  .brand { font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 400; white-space: nowrap; }
   .seg {
     display: inline-flex; border: 1px solid var(--dim); border-radius: 999px; padding: 3px; gap: 2px; flex: 0 0 auto;
   }
@@ -74,6 +74,10 @@
     transition: background .2s, color .2s;
   }
   .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); font-weight: 500; }
+  .hdr-btns { display: inline-flex; gap: 6px; flex: 0 0 auto; }
+  .map-btn { padding: 5px 8px; display: inline-grid; place-items: center; border-color: var(--dim); color: var(--fg); }
+  .map-btn svg { width: 15px; height: 15px; }
+  .map-btn.live { border-color: var(--now); color: var(--now); }
   .now-btn {
     appearance: none; background: transparent; border: 1px solid var(--now); color: var(--now);
     font: inherit; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
@@ -210,6 +214,27 @@
   .lg-toggle:has(input:checked) .lg.mar::before { border-top-color: #4A8CFF; }
   .lg-toggle:has(input:checked) { color: var(--fg); }
   .lg-toggle:has(input:focus-visible) { outline: 1px solid var(--fg); outline-offset: 3px; }
+  .map-wrap { position: relative; }
+  .map-tools { display: flex; justify-content: flex-end; margin-top: -2px; }
+  .loc-btn {
+    appearance: none; background: transparent; border: 1px solid var(--dim); color: var(--fg); font: inherit; font-size: 12px; font-weight: 500;
+    letter-spacing: .06em; text-transform: uppercase; padding: 6px 12px 6px 10px; border-radius: 999px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; transition: border-color .2s, color .2s;
+  }
+  .loc-ring { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--muted); box-sizing: border-box; transition: background .2s, border-color .2s; }
+  .loc-btn.live { border-color: var(--now); color: var(--now); }
+  .loc-btn.live .loc-ring { background: var(--now); border-color: var(--now); box-shadow: 0 0 8px rgba(74,140,255,.8); animation: pulse-blue 2.4s ease-out infinite; }
+  .loc-btn.wait .loc-ring { border-color: var(--now); animation: spin-ring 1s linear infinite; border-top-color: transparent; }
+  .loc-btn.off { color: var(--muted); }
+  @keyframes pulse-blue { 0% { box-shadow: 0 0 0 0 rgba(74,140,255,.5); } 70% { box-shadow: 0 0 0 7px rgba(74,140,255,0); } 100% { box-shadow: 0 0 0 7px rgba(74,140,255,0); } }
+  @keyframes spin-ring { to { transform: rotate(360deg); } }
+  .map .me .me-dot { fill: var(--now); stroke: var(--bg); stroke-width: 1.5; }
+  .map .me .me-halo { fill: rgba(74,140,255,.18); animation: halo 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+  .map .me .me-acc { fill: rgba(74,140,255,.07); stroke: rgba(74,140,255,.35); stroke-width: .8; stroke-dasharray: 2 2; }
+  .map .me text { font-family: var(--font-accent); font-style: italic; font-size: 12px; fill: var(--now); }
+  @keyframes halo { 0% { transform: scale(.5); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+  .map-note { font-size: 12.5px; color: var(--muted); margin: 0; }
+  .map-note i { font-family: var(--font-accent); font-style: italic; font-weight: 300; }
   .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 12.5px; color: var(--muted); padding-inline: 2px; }
   .legend span { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
   .lg { display: inline-grid; place-items: center; width: 22px; height: 12px; flex: 0 0 auto; }
@@ -388,7 +413,7 @@
   footer .desc { color: var(--muted); font-size: 13px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .eclipse, .stop.current .dot, .nowline .rule { animation: none; }
+    .eclipse, .stop.current .dot, .nowline .rule, .loc-btn.live .loc-ring, .loc-btn.wait .loc-ring, .map .me .me-halo { animation: none; }
     .nowline, .track-done, .stop .dot, .opt { transition: none; }
   }
 </style>
@@ -402,7 +427,10 @@
       <button type="button" id="car-buzz" data-car="buzz" aria-pressed="false">ID. Buzz</button>
       <button type="button" id="car-peugeot" data-car="peugeot" aria-pressed="true">Peugeot</button>
     </div>
-    <button type="button" class="now-btn" id="jump-now" title="Scroll to now">Now</button>
+    <div class="hdr-btns">
+      <button type="button" class="now-btn map-btn" id="jump-map" title="Scroll to the map" aria-label="Map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></button>
+      <button type="button" class="now-btn" id="jump-now" title="Scroll to now">Now</button>
+    </div>
   </div>
 </header>
 
@@ -467,7 +495,7 @@
     </details>
   </section>
 
-  <section class="mapsec">
+  <section class="mapsec" id="map">
     <div class="map-head">
       <h2>On foot</h2>
       <p class="cue">Everything is within a quarter of an hour of the hotel.</p>
@@ -499,9 +527,13 @@
   <g class="pt"><circle cx="91.1" cy="63.4" r="4"/><text class="ml " x="99.1" y="67.4" text-anchor="start">Cathedral</text></g>
   <g class="pt"><circle cx="94.3" cy="503.0" r="4"/><text class="ml " x="102.3" y="517.0" text-anchor="start">Beaux-Arts</text></g>
   <g class="pt home"><circle cx="249.2" cy="458.2" r="9"/><circle cx="249.2" cy="458.2" r="3" class="core"/><text class="ml home" x="263.2" y="462.2" text-anchor="start">L'Hermitage Gantois</text></g>
+  <g class="me" id="me" hidden><circle class="me-halo" r="14"/><circle class="me-acc" r="0"/><circle class="me-dot" r="4.5"/></g>
   <g class="scale"><line x1="20" y1="578" x2="223.4" y2="578"/><text class="ml dim" x="20" y="572">500 m</text></g>
   <g class="north"><text class="ml dim" x="576" y="24" text-anchor="middle">N</text><line x1="576" y1="30" x2="576" y2="46"/></g>
 </svg>
+    </div>
+    <div class="map-tools">
+      <button type="button" class="loc-btn" id="loc-btn"><span class="loc-ring"></span><span id="loc-label">Where are we?</span></button>
     </div>
     <div class="legend">
       <span><i class="lg sat"></i>Saturday</span>
@@ -1027,6 +1059,57 @@
 
 
 
+
+
+  /* ---- where are we: a blue dot on the map from the phone's location ---- */
+  (function locate() {
+    var btn = document.getElementById('loc-btn'), label = document.getElementById('loc-label');
+    var me = document.getElementById('me'), mapEl = document.querySelector('.map'), mapBtn = document.getElementById('jump-map');
+    if (!btn || !me) return;
+    var MINLON = 3.0595098, MAXLAT = 50.641587, K = 0.63407, SX = 45298;
+    var watch = null;
+    function px(lat, lon) { return [(lon - MINLON) * K * SX, (MAXLAT - lat) * SX]; }
+    function show(pos) {
+      var lat = pos.coords.latitude, lon = pos.coords.longitude, acc = pos.coords.accuracy || 0;
+      var p = px(lat, lon);
+      var inside = p[0] > -20 && p[0] < 620 && p[1] > -20 && p[1] < 620;
+      if (!inside) {
+        me.hidden = true;
+        var dkm = Math.round(Math.sqrt(Math.pow((lat - 50.6315) * 111.3, 2) + Math.pow((lon - 3.0682) * 111.3 * K, 2)));
+        label.textContent = dkm < 2 ? 'Just off the map' : dkm + ' km from the hotel';
+        btn.classList.remove('wait'); btn.classList.add('live');
+        return;
+      }
+      me.hidden = false;
+      me.setAttribute('transform', 'translate(' + p[0].toFixed(1) + ',' + p[1].toFixed(1) + ')');
+      var accPx = Math.min(80, acc / 111320 * SX);
+      me.querySelector('.me-acc').setAttribute('r', accPx > 8 ? accPx.toFixed(1) : 0);
+      var dm = Math.round(Math.sqrt(Math.pow((lat - 50.6314698) * 111320, 2) + Math.pow((lon - 3.0681864) * 111320 * K, 2)));
+      label.textContent = dm < 60 ? 'At the hotel' : dm < 1000 ? dm + ' m from the hotel' : (dm / 1000).toFixed(1) + ' km from the hotel';
+      btn.classList.remove('wait'); btn.classList.add('live');
+      mapBtn.classList.add('live');
+    }
+    function fail(err) {
+      btn.classList.remove('wait', 'live'); btn.classList.add('off');
+      label.textContent = err && err.code === 1 ? 'Location not allowed' : 'No location';
+      setTimeout(function () { btn.classList.remove('off'); label.textContent = 'Where are we?'; }, 4000);
+      watch = null;
+    }
+    btn.addEventListener('click', function () {
+      if (!navigator.geolocation) { fail(); return; }
+      if (watch !== null) {
+        navigator.geolocation.clearWatch(watch); watch = null; me.hidden = true;
+        btn.classList.remove('live', 'wait'); mapBtn.classList.remove('live'); label.textContent = 'Where are we?';
+        return;
+      }
+      btn.classList.add('wait'); label.textContent = 'Finding us…';
+      watch = navigator.geolocation.watchPosition(show, fail, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+    });
+    mapBtn.addEventListener('click', function () {
+      var top = document.getElementById('map').getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  })();
 
   /* ---- marathon overlay toggle ---- */
   (function () {
