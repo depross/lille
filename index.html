@@ -85,7 +85,6 @@
   }
 
   @media (max-width: 480px) {
-    .brand-long { display: none; }
     .top-inner { gap: 8px; }
     .seg button { padding: 6px 10px; font-size: 12.5px; }
     .now-btn { padding: 6px 9px; font-size: 11px; }
@@ -93,8 +92,6 @@
   }
 
   /* ---- settings sheet ---- */
-  .brand-car { color: var(--dim); }
-  .brand-car::before { content: " · "; }
   .gear-btn { padding: 5px 8px; display: inline-grid; place-items: center; border-color: var(--dim); color: var(--fg); }
   .gear-btn svg { width: 15px; height: 15px; }
   .sheet-bg { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 20; }
@@ -474,7 +471,7 @@
 <body>
 <header class="top">
   <div class="top-inner">
-    <span class="brand"><span class="brand-long">Lille · </span>24–25 Oct<span class="brand-car" id="brand-car"></span></span>
+    <span class="brand">Lille · 24–25 Oct</span>
     <div class="hdr-btns">
       <button type="button" class="now-btn map-btn" id="jump-map" title="Scroll to the map" aria-label="Map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></button>
       <button type="button" class="now-btn" id="jump-now" title="Scroll to now">Now</button>
@@ -1216,10 +1213,6 @@
     openBtn.addEventListener('click', function () { sheet.hidden ? open() : close(); });
     closeBtn.addEventListener('click', close); bg.addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
-    var brandCar = document.getElementById('brand-car');
-    function label() { brandCar.textContent = document.body.getAttribute('data-car') === 'buzz' ? 'ID. Buzz' : 'Peugeot'; }
-    label();
-    document.querySelectorAll('.seg button').forEach(function (b) { b.addEventListener('click', function () { setTimeout(label, 0); }); });
     var cb = document.getElementById('show-marathon'), key = document.getElementById('mar-key');
     function keyVis() { key.hidden = !cb.checked; }
     keyVis(); cb.addEventListener('change', keyVis);
