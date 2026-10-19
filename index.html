@@ -223,7 +223,7 @@
   .lg-toggle:has(input:checked) { color: var(--fg); }
   .lg-toggle:has(input:focus-visible) { outline: 1px solid var(--fg); outline-offset: 3px; }
   .map-wrap { position: relative; }
-  .map-tools { display: flex; justify-content: flex-end; margin-top: -2px; }
+  .map-tools { display: flex; justify-content: flex-start; margin-top: -2px; }
   .loc-btn {
     appearance: none; background: transparent; border: 1px solid var(--dim); color: var(--fg); font: inherit; font-size: 12px; font-weight: 500;
     letter-spacing: .06em; text-transform: uppercase; padding: 6px 12px 6px 10px; border-radius: 999px; cursor: pointer;
@@ -243,14 +243,23 @@
   @keyframes halo { 0% { transform: scale(.5); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
   .map-note { font-size: 12.5px; color: var(--muted); margin: 0; }
   .map-note i { font-family: var(--font-accent); font-style: italic; font-weight: 300; }
-  .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 12.5px; color: var(--muted); padding-inline: 2px; }
-  .legend span { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
-  .lg { display: inline-grid; place-items: center; width: 22px; height: 12px; flex: 0 0 auto; }
-  .lg::before { content: ""; width: 22px; height: 0; border-top: 1.6px dashed var(--fg); }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12.5px; color: var(--muted); }
+  .lgi { display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; white-space: nowrap; min-width: 0; }
+  .lg { display: inline-grid; place-items: center; width: 18px; height: 12px; flex: 0 0 auto; }
+  .lg::before { content: ""; width: 18px; height: 0; border-top: 1.6px dashed var(--fg); }
   .lg.sun::before { border-top: 1.2px dotted var(--muted); }
-  .lg.zone::before { width: 11px; height: 11px; border: 1px dashed rgba(74,140,255,.7); border-radius: 50%; }
-  .lg.park::before { width: 10px; height: 10px; border: 1px solid var(--fg); border-radius: 2px; }
-  @media (min-width: 480px) { .legend { grid-template-columns: repeat(4, auto); justify-content: start; gap: 8px 22px; } }
+  .lg.zone::before { width: 10px; height: 10px; border: 1px dashed rgba(74,140,255,.7); border-radius: 50%; }
+  .lg.park::before { width: 9px; height: 9px; border: 1px solid var(--fg); border-radius: 2px; }
+  .lg.mar::before { border-top: 1.6px solid rgba(74,140,255,.45); }
+  .lg-toggle { cursor: pointer; border-color: var(--dim); color: var(--fg); transition: border-color .2s, background .2s; }
+  .lg-toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .lg-toggle .sw { width: 26px; height: 15px; border-radius: 999px; border: 1px solid var(--dim); position: relative; margin-left: 2px; box-sizing: border-box; transition: border-color .2s, background .2s; }
+  .lg-toggle .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); transition: transform .2s, background .2s; }
+  .lg-toggle:has(input:checked) { border-color: rgba(74,140,255,.6); }
+  .lg-toggle:has(input:checked) .sw { background: rgba(74,140,255,.18); border-color: var(--now); }
+  .lg-toggle:has(input:checked) .sw::after { transform: translateX(11px); background: var(--now); }
+  .lg-toggle:has(input:checked) .lg.mar::before { border-top-color: var(--now); }
+  .lg-toggle:has(input:focus-visible) { outline: 1px solid var(--fg); outline-offset: 3px; }
   .stop .where a.tel::before { display: none; }
   .stop .where a.tel svg { width: 13px; height: 13px; margin: -1px 0; }
 
@@ -544,12 +553,12 @@
       <button type="button" class="loc-btn" id="loc-btn"><span class="loc-ring"></span><span id="loc-label">Where are we?</span></button>
     </div>
     <div class="legend">
-      <span><i class="lg sat"></i>Saturday</span>
-      <span><i class="lg sun"></i>Sunday</span>
-      <label class="lg-toggle"><input type="checkbox" id="show-marathon"><i class="lg mar"></i>Marathon course</label>
-      <span><i class="lg zone"></i>Marathon start</span>
-      <span class="peugeot-only"><i class="lg park"></i>Euralille, the Peugeot</span>
-      <span class="buzz-only"><i class="lg park"></i>Grand Palais, the Buzz</span>
+      <span class="lgi"><i class="lg sat"></i>Saturday</span>
+      <span class="lgi"><i class="lg sun"></i>Sunday</span>
+      <span class="lgi"><i class="lg zone"></i>Start zone</span>
+      <span class="lgi peugeot-only"><i class="lg park"></i>Euralille</span>
+      <span class="lgi buzz-only"><i class="lg park"></i>Grand Palais</span>
+      <label class="lgi lg-toggle"><input type="checkbox" id="show-marathon"><i class="lg mar"></i>Marathon course<span class="sw" aria-hidden="true"></span></label>
     </div>
   </section>
 
