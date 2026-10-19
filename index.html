@@ -128,18 +128,7 @@
   .block p.soft { color: var(--muted); }
   .block ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
   /* the marathon notice, cut like a race bib */
-  .bib {
-    position: relative; border: 1px solid var(--dim); border-radius: 8px; padding: 22px 20px 22px; margin-block: 8px 12px;
-    background: #0B0A09;
-  }
-  .bib::before, .bib::after {
-    content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--dim); top: 8px;
-  }
-  .bib::before { left: 8px; } .bib::after { right: 8px; }
-  .bib + .block { border-top: 0; }
-  .bib-num { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding-bottom: 6px; }
-  .bib-num span { font-size: clamp(44px, 13vw, 64px); font-weight: 300; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-  .bib-num small { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .note h2 { color: var(--muted); }
 
   details > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
   details > summary::-webkit-details-marker { display: none; }
@@ -275,7 +264,6 @@
   .more-body { display: grid; gap: 8px; padding: 8px 0 4px; max-width: 60ch; }
   .more-body p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--muted); }
   .more-body p:first-child::first-letter { font-family: var(--font-accent); font-style: italic; font-size: 1.6em; line-height: 1; color: var(--fg); }
-  .bib .more { margin-top: 4px; }
 
   /* ---- open slots: a swipeable strip of menu cards inside the stop ---- */
   .slot { margin-top: 2px; }
@@ -470,13 +458,12 @@
     <p class="status" id="status"></p>
   </section>
 
-  <section class="block bib" id="marathon">
-    <div class="bib-num"><span>42.195</span><small>km · Sunday 25 · start 11:15</small></div>
-    <h2>Sunday is the Lille Marathon</h2>
-    <p>Roads around the route are closed from 02:30 to 20:00. Some motorway ramps into Lille (N356, A25) close from 06:00. Cars left with the hotel valet cannot leave before 20:00, so we don't use valet.</p>
-    <p class="soft peugeot-only">With the Peugeot we park at Euralille. The hotel recommends it for anyone leaving before 20:00, and the city keeps it accessible during the event.</p>
-    <p class="soft buzz-only">With the ID. Buzz, Euralille is out (1.90 m clearance, the Buzz is about 1.96 m). Lille Grand Palais / Zénith is the provisional plan and only counts once the clearance and the Sunday exit are confirmed in writing.</p>
-      <details class="more"><summary>What is going on</summary><div class="more-body"><p>Lille hasn't had a marathon since 1995. This is the comeback, 31 years later, and the city went slightly mad for it: 18,000 bibs sold out in under two hours on the evening registration opened.</p><p>Three races share the day. The half-marathon goes off at 08:30, the marathon at 11:15 from boulevard de la Liberté, beside parc Jean-Baptiste Lebas. The first kilometres run past Grand Palais, round Lille Flandres, up Rue Faidherbe across Grand'Place and out through Vieux-Lille; the last ones come back along the boulevard, under the hotel's windows, to finish on the Esplanade du Champ de Mars by the Citadelle. Switch on the course in the map legend to see it.</p><p>For us it means three things. The course runs up Rue Pierre Mauroy past the hotel door and across Grand'Place, so expect barriers and a wait at the crossings between roughly 11:00 and 14:00. It also loops around the Grand Palais block, which is one more reason the Buzz plan needs a written confirmation. And the road closures run to 20:00. On foot, none of it is a problem. By car, we follow the signs and leave from a car park that is confirmed open.</p></div></details>
+  <section class="block note" id="marathon">
+    <h2>Good to know</h2>
+    <p>Sunday is the Lille Marathon. Roads along the course are closed from 02:30 to 20:00 and some motorway ramps into Lille close from 06:00. We don't use the hotel's valet: those cars can't leave before 20:00.</p>
+    <p class="soft peugeot-only">The Peugeot goes to Euralille, which stays accessible all day.</p>
+    <p class="soft buzz-only">The ID. Buzz doesn't fit Euralille (1.90 m). Grand Palais / Zénith is the provisional plan, pending written confirmation of the height and the Sunday exit.</p>
+      <details class="more"><summary>More about the marathon</summary><div class="more-body"><p>Lille hasn't had a marathon since 1995. This is the comeback, 31 years later, and the city went slightly mad for it: 18,000 bibs sold out in under two hours on the evening registration opened.</p><p>Three races share the day. The half-marathon goes off at 08:30, the marathon at 11:15 from boulevard de la Liberté, beside parc Jean-Baptiste Lebas. The first kilometres run past Grand Palais, round Lille Flandres, up Rue Faidherbe across Grand'Place and out through Vieux-Lille; the last ones come back along the boulevard, under the hotel's windows, to finish on the Esplanade du Champ de Mars by the Citadelle. Switch on the course in the map legend to see it.</p><p>For us it means three things. The course runs up Rue Pierre Mauroy past the hotel door and across Grand'Place, so expect barriers and a wait at the crossings between roughly 11:00 and 14:00. It also loops around the Grand Palais block, which is one more reason the Buzz plan needs a written confirmation. And the road closures run to 20:00. On foot, none of it is a problem. By car, we follow the signs and leave from a car park that is confirmed open.</p></div></details>
   </section>
 
   <section class="block">
