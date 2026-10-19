@@ -104,8 +104,8 @@
   .hero {
     display: grid; justify-items: center; align-content: center; text-align: center; gap: 28px;
     padding-block: 32px 40px;
-    min-height: calc(100vh - 70px - 110px - env(safe-area-inset-top, 0px));
-    min-height: calc(100svh - 70px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    min-height: calc(100vh - 64px - env(safe-area-inset-top, 0px));
+    min-height: calc(100lvh - 64px - env(safe-area-inset-top, 0px));
     box-sizing: border-box; position: relative;
   }
   .hero .scroll-cue { position: absolute; bottom: 14px; left: 50%; width: 1px; height: 28px; background: linear-gradient(var(--dim), transparent); animation: cue 2.4s ease-in-out infinite; }
@@ -893,13 +893,14 @@
   (function () {
     var hero = document.querySelector('.hero'), top = document.querySelector('.top');
     if (!hero || !top) return;
+    // Where CSS knows the large viewport (screen with browser bars collapsed), the stylesheet handles it.
+    if (window.CSS && CSS.supports && CSS.supports('min-height', '100lvh')) return;
     var probe = document.createElement('div');
-    probe.style.cssText = 'position:fixed;left:0;bottom:0;width:0;height:0;padding-bottom:env(safe-area-inset-bottom,0px);visibility:hidden;pointer-events:none';
+    probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;visibility:hidden;pointer-events:none';
     document.body.appendChild(probe);
     function fit() {
-      var inset = probe.getBoundingClientRect().height || 0;
-      var h = (window.visualViewport ? window.visualViewport.height : window.innerHeight) - top.offsetHeight - inset;
-      hero.style.minHeight = Math.max(420, Math.round(h)) + 'px';
+      var full = Math.max(probe.getBoundingClientRect().height, window.innerHeight, document.documentElement.clientHeight);
+      hero.style.minHeight = Math.max(420, Math.round(full - top.offsetHeight - (top.getBoundingClientRect().top || 0))) + 'px';
     }
     fit();
     window.addEventListener('resize', fit);
