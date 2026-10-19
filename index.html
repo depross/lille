@@ -117,14 +117,8 @@
   .block ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; display: grid; gap: 4px; }
   /* the marathon notice, cut like a race bib */
   .bib {
-    position: relative; border: 1px solid var(--dim); border-radius: 8px; padding: 22px 20px 22px; margin-top: 8px;
-    background:
-      radial-gradient(circle at 12px 12px, var(--bg) 3px, transparent 3.5px),
-      radial-gradient(circle at calc(100% - 12px) 12px, var(--bg) 3px, transparent 3.5px),
-      radial-gradient(circle at 12px calc(100% - 12px), var(--bg) 3px, transparent 3.5px),
-      radial-gradient(circle at calc(100% - 12px) calc(100% - 12px), var(--bg) 3px, transparent 3.5px),
-      #0B0A09;
-    transform: rotate(-.6deg);
+    position: relative; border: 1px solid var(--dim); border-radius: 8px; padding: 22px 20px 22px; margin-block: 8px 12px;
+    background: #0B0A09;
   }
   .bib::before, .bib::after {
     content: ""; position: absolute; width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--dim); top: 8px;
@@ -312,7 +306,6 @@
   @media (prefers-reduced-motion: reduce) {
     .eclipse, .stop.current .dot, .nowline .rule { animation: none; }
     .nowline, .track-done, .stop .dot, .opt { transition: none; }
-    .bib { transform: none; }
   }
 </style>
 
