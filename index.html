@@ -63,7 +63,7 @@
     padding-block: 12px;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-  .brand { font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 400; white-space: nowrap; }
+  .brand { font-size: 12px; min-width: 0; flex: 0 0 auto; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 400; white-space: nowrap; }
   .seg {
     display: inline-flex; border: 1px solid var(--dim); border-radius: 999px; padding: 3px; gap: 2px; flex: 0 0 auto;
   }
@@ -82,6 +82,14 @@
     appearance: none; background: transparent; border: 1px solid var(--now); color: var(--now);
     font: inherit; font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
     padding: 6px 10px; border-radius: 999px; cursor: pointer;
+  }
+
+  @media (max-width: 480px) {
+    .brand-long { display: none; }
+    .top-inner { gap: 8px; }
+    .seg button { padding: 6px 10px; font-size: 12.5px; }
+    .now-btn { padding: 6px 9px; font-size: 11px; }
+    .map-btn { padding: 5px 7px; }
   }
 
   /* ---- page column ---- */
@@ -422,7 +430,7 @@
 <body>
 <header class="top">
   <div class="top-inner">
-    <span class="brand">Lille · 24–25 Oct</span>
+    <span class="brand"><span class="brand-long">Lille · </span>24–25 Oct</span>
     <div class="seg" role="group" aria-label="Which car">
       <button type="button" id="car-buzz" data-car="buzz" aria-pressed="false">ID. Buzz</button>
       <button type="button" id="car-peugeot" data-car="peugeot" aria-pressed="true">Peugeot</button>
