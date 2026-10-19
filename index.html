@@ -101,7 +101,15 @@
   }
 
   /* ---- hero ---- */
-  .hero { padding-block: 64px 40px; display: grid; justify-items: center; text-align: center; gap: 28px; }
+  .hero {
+    display: grid; justify-items: center; align-content: center; text-align: center; gap: 28px;
+    padding-block: 32px 40px;
+    min-height: calc(100vh - 70px - env(safe-area-inset-top, 0px));
+    min-height: calc(100svh - 70px - env(safe-area-inset-top, 0px));
+    box-sizing: border-box; position: relative;
+  }
+  .hero .scroll-cue { position: absolute; bottom: 14px; left: 50%; width: 1px; height: 28px; background: linear-gradient(var(--dim), transparent); animation: cue 2.4s ease-in-out infinite; }
+  @keyframes cue { 0%, 100% { opacity: .3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(6px); } }
   .eclipse {
     width: 150px; height: 150px; border-radius: 50%; background: var(--bg) center / cover no-repeat;
     background-color: var(--bg);
@@ -418,7 +426,7 @@
   footer .desc { color: var(--muted); font-size: 13px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .eclipse, .stop.current .dot, .nowline .rule, .loc-btn.live .loc-ring, .loc-btn.wait .loc-ring, .map .me .me-halo { animation: none; }
+    .eclipse, .stop.current .dot, .nowline .rule, .loc-btn.live .loc-ring, .loc-btn.wait .loc-ring, .map .me .me-halo, .hero .scroll-cue { animation: none; }
     .nowline, .track-done, .stop .dot, .opt { transition: none; }
   }
 </style>
@@ -456,6 +464,7 @@
     <p class="sub">Darinka &amp; Yves, one night away.</p>
     <p class="meta">Saturday 24 – Sunday 25 October 2026</p>
     <p class="status" id="status"></p>
+    <span class="scroll-cue" aria-hidden="true"></span>
   </section>
 
   <section class="block note" id="marathon">
