@@ -133,10 +133,30 @@
   details > summary::-webkit-details-marker { display: none; }
   details > summary::after { content: "+"; color: var(--muted); font-weight: 300; font-size: 18px; }
   details[open] > summary::after { content: "–"; }
-  .checks { display: grid; gap: 10px; padding-top: 14px; }
-  .checks label { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; font-size: 15px; cursor: pointer; }
-  .checks input { margin: 4px 0 0; width: 16px; height: 16px; accent-color: var(--fg); }
-  .checks input:checked + span { color: var(--dim); text-decoration: line-through; text-decoration-color: var(--dim); }
+  .prep-count { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: auto; margin-right: 14px; font-variant-numeric: tabular-nums; }
+  .prep-count.done { color: var(--orange); }
+  .checks { display: grid; gap: 22px; padding-top: 18px; }
+  .ck-group { display: grid; gap: 2px; }
+  .ck-group h3 { margin: 0 0 6px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; display: flex; gap: 10px; align-items: baseline; }
+  .ck-group h3 i { font-family: var(--font-accent); font-style: italic; font-weight: 300; font-size: 14px; letter-spacing: 0; text-transform: none; color: var(--dim); }
+  .checks label { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; padding: 8px 0; cursor: pointer; border-bottom: 1px solid var(--line); }
+  .ck-group label:last-of-type { border-bottom: 0; }
+  .checks input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .checks .ck { width: 16px; height: 16px; margin-top: 3px; border-radius: 50%; border: 1px solid var(--dim); display: grid; place-items: center; transition: background .2s, border-color .2s; }
+  .checks .ck::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--bg); opacity: 0; transition: opacity .2s; }
+  .checks input:checked + .ck { background: var(--orange); border-color: var(--orange); }
+  .checks input:checked + .ck::after { opacity: 1; }
+  .checks input:focus-visible + .ck { outline: 1px solid var(--fg); outline-offset: 3px; }
+  .checks .txt { display: grid; gap: 2px; font-size: 15px; color: var(--fg); transition: color .2s; }
+  .checks .txt small { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .checks .txt small a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .checks input:checked ~ .txt { color: var(--dim); }
+  .checks input:checked ~ .txt small { color: var(--dim); }
+  .checks input:checked ~ .txt > :first-child { text-decoration: line-through; text-decoration-color: var(--dim); }
+  .checks label:hover .ck { border-color: var(--muted); }
+  .ck-reset { margin: 0; }
+  .ck-reset button { appearance: none; background: transparent; border: 0; color: var(--dim); font: inherit; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; padding: 0; }
+  .ck-reset button:hover { color: var(--muted); }
 
   /* ---- weather: day summary under each day header ---- */
   .wx { display: none; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; font-size: 13px; color: var(--muted); }
@@ -416,14 +436,34 @@
 
   <section class="block">
     <details id="prep">
-      <summary><h2>Before Saturday</h2></summary>
+      <summary><h2>Checklist</h2><span class="prep-count" id="prep-count"></span></summary>
       <div class="checks">
-        <label><input type="checkbox" id="chk-eva"><span>Confirm Eva Restaurant, Saturday 19:00</span></label>
-        <label><input type="checkbox" id="chk-massage"><span>Confirm the massage, Saturday 16:30</span></label>
-        <label><input type="checkbox" id="chk-car"><span>Choose the car (use the toggle at the top)</span></label>
-        <label class="buzz-only"><input type="checkbox" id="chk-buzz-confirm"><span>Written confirmation from the car park or hotel: 1.96 m clearance at the entrance and on the route to a space, open Saturday, in and out during the marathon, out before 20:00 Sunday</span></label>
-        <label><input type="checkbox" id="chk-parking"><span>Check parking availability and live traffic</span></label>
-        <label><input type="checkbox" id="chk-pack"><span>Pack light, it's a walk from the car to the hotel</span></label>
+        <div class="ck-group">
+          <h3>This week <i>By Friday evening.</i></h3>
+          <label><input type="checkbox" id="chk-eva"><span class="ck"></span><span class="txt"><span>Eva confirmed, Saturday 19:00</span><small>A quick call is enough. <a href="tel:+33320294826">+33 3 20 29 48 26</a></small></span></label>
+          <label><input type="checkbox" id="chk-massage"><span class="ck"></span><span class="txt"><span>Massage confirmed, Saturday 16:30</span><small>Ask what time to be at the spa, and whether to bring swimwear for the pool afterwards.</small></span></label>
+          <label><input type="checkbox" id="chk-car"><span class="ck"></span><span class="txt"><span>Car chosen</span><small>Use the toggle at the top. Everything below follows it.</small></span></label>
+          <label class="buzz-only"><input type="checkbox" id="chk-buzz-confirm"><span class="ck"></span><span class="txt"><span>Written confirmation for the Buzz</span><small>1.96 m at the entrance and on the route to a space, open Saturday, in and out during the marathon, out before 20:00 Sunday. The course loops around the Grand Palais block.</small></span></label>
+          <label><input type="checkbox" id="chk-hotel-bags"><span class="ck"></span><span class="txt"><span>Hotel asked about bags before check-in</span><small>One line by email. Also mention the 16:30 massage so the room is prioritised.</small></span></label>
+          <label><input type="checkbox" id="chk-ids"><span class="ck"></span><span class="txt"><span>ID cards, and the French side needs nothing else</span><small>Belgian ID is enough in France. Cards, not just phones.</small></span></label>
+          <label><input type="checkbox" id="chk-forecast"><span class="ck"></span><span class="txt"><span>Forecast checked on Friday</span><small>The day lines above update themselves. If a rain plan appears, read it.</small></span></label>
+        </div>
+        <div class="ck-group">
+          <h3>Saturday morning <i>Before the car.</i></h3>
+          <label><input type="checkbox" id="chk-traffic"><span class="ck"></span><span class="txt"><span>Live traffic checked before 08:30</span><small>A25 towards Lille. The marathon ramps only close on Sunday.</small></span></label>
+          <label><input type="checkbox" id="chk-pack"><span class="ck"></span><span class="txt"><span>Packed light</span><small>It is a 12 to 15 minute walk from the car to the hotel. One bag each.</small></span></label>
+          <label><input type="checkbox" id="chk-shoes"><span class="ck"></span><span class="txt"><span>Walking shoes on, something nicer for Eva in the bag</span><small>Cobbles all day Saturday. Eva is velvet and dimmed lights.</small></span></label>
+          <label><input type="checkbox" id="chk-charger"><span class="ck"></span><span class="txt"><span>Charger and cable</span><small>This page, the Maps links and the photos all live on the phone.</small></span></label>
+          <label><input type="checkbox" id="chk-umbrella"><span class="ck"></span><span class="txt"><span>Umbrella</span><small>Late October in the north. Even on a dry forecast.</small></span></label>
+          <label><input type="checkbox" id="chk-cash"><span class="ck"></span><span class="txt"><span>A little cash</span><small>Méert and the smaller cafés sometimes prefer it for small amounts.</small></span></label>
+        </div>
+        <div class="ck-group">
+          <h3>Sunday <i>Before leaving the hotel.</i></h3>
+          <label><input type="checkbox" id="chk-checkout"><span class="ck"></span><span class="txt"><span>Check-out done, bags with reception</span><small>Ask for a tag so pickup is quick at 15:15.</small></span></label>
+          <label><input type="checkbox" id="chk-ramps"><span class="ck"></span><span class="txt"><span>Route home checked for closed ramps</span><small>N356 and A25 access points close from 06:00. Follow the diversions, not the usual turn.</small></span></label>
+          <label><input type="checkbox" id="chk-forgot"><span class="ck"></span><span class="txt"><span>Room swept: chargers, bathroom, wardrobe</span><small>The three places things get left.</small></span></label>
+        </div>
+        <p class="ck-reset"><button type="button" id="prep-reset">Reset the list</button></p>
       </div>
     </details>
   </section>
@@ -815,12 +855,28 @@
   });
 
   /* ---- checklist persistence ---- */
+  var prepCount = document.getElementById('prep-count');
+  function countChecks() {
+    var all = Array.prototype.filter.call(document.querySelectorAll('.checks input[type=checkbox]'), function (c) { return c.offsetParent !== null; });
+    var done = all.filter(function (c) { return c.checked; }).length;
+    prepCount.textContent = done + ' / ' + all.length;
+    prepCount.classList.toggle('done', done === all.length && all.length > 0);
+  }
   document.querySelectorAll('.checks input[type=checkbox]').forEach(function (c) {
     try { c.checked = localStorage.getItem('lille-' + c.id) === '1'; } catch (e) {}
     c.addEventListener('change', function () {
       try { localStorage.setItem('lille-' + c.id, c.checked ? '1' : '0'); } catch (e) {}
+      countChecks();
     });
   });
+  document.getElementById('prep-reset').addEventListener('click', function () {
+    document.querySelectorAll('.checks input[type=checkbox]').forEach(function (c) {
+      c.checked = false; try { localStorage.removeItem('lille-' + c.id); } catch (e) {}
+    });
+    countChecks();
+  });
+  document.querySelectorAll('.seg button').forEach(function (b) { b.addEventListener('click', function () { setTimeout(countChecks, 0); }); });
+  countChecks();
 
   /* ---- still open: one pick per slot, remembered on this device ---- */
   document.querySelectorAll('.slot').forEach(function (slot) {
