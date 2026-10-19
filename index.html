@@ -104,7 +104,7 @@
   .hero {
     display: grid; justify-items: center; align-content: center; text-align: center; gap: 28px;
     padding-block: 32px 40px;
-    min-height: calc(100vh - 70px - env(safe-area-inset-top, 0px));
+    min-height: calc(100vh - 70px - 110px - env(safe-area-inset-top, 0px));
     min-height: calc(100svh - 70px - env(safe-area-inset-top, 0px));
     box-sizing: border-box; position: relative;
   }
@@ -881,6 +881,21 @@
 (function () {
   var body = document.body;
   var KEY_CAR = 'lille-car';
+
+
+  /* ---- hero: fill exactly the visible screen under the header, even where svh is unsupported ---- */
+  (function () {
+    var hero = document.querySelector('.hero'), top = document.querySelector('.top');
+    if (!hero || !top) return;
+    function fit() {
+      var h = (window.visualViewport ? window.visualViewport.height : window.innerHeight) - top.offsetHeight;
+      hero.style.minHeight = Math.max(420, Math.round(h)) + 'px';
+    }
+    fit();
+    window.addEventListener('resize', fit);
+    window.addEventListener('orientationchange', function () { setTimeout(fit, 300); });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
+  })();
 
   /* ---- car toggle ---- */
   function setCar(car, persist) {
