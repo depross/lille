@@ -778,8 +778,18 @@
   var leadTitle = document.getElementById('lead-title');
   var leadSub = document.getElementById('lead-sub');
 
+  var PREVIEW = (location.hash === '#preview');
+  var previewStart = new Date(2026, 9, 24, 11, 50).getTime();
+  var previewBoot = Date.now();
+  function clock() {
+    if (!PREVIEW) return new Date();
+    // preview: one real second is three minutes, starting Saturday 11:50
+    return new Date(previewStart + (Date.now() - previewBoot) * 180);
+  }
+  window.addEventListener('hashchange', function () { PREVIEW = (location.hash === '#preview'); previewBoot = Date.now(); update(); });
+
   function update() {
-    var now = new Date();
+    var now = clock();
     var t = now.getTime();
     var pre = t < tripStart.getTime();
     lead.hidden = !pre;
@@ -823,7 +833,7 @@
       if (slotNow && !slotNow.open && !slotNow.hasAttribute('data-touched')) { slotNow.open = true; }
     }
 
-    tag.textContent = 'now · ' + DAYS[now.getDay()] + ' ' + hm(now);
+    tag.textContent = (PREVIEW ? 'preview · ' : 'now · ') + DAYS[now.getDay()] + ' ' + hm(now);
 
     if (t < tripStart.getTime()) {
       var days = Math.ceil((tripStart.getTime() - t) / 86400000);
@@ -846,6 +856,7 @@
     }
   } catch (e) {}
   update();
+  setInterval(function () { if (PREVIEW) update(); }, 1000);
   setInterval(update, 30000);
   window.addEventListener('resize', update);
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
