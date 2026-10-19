@@ -179,8 +179,9 @@
   .lg.sun { border-top: 1.2px dotted var(--muted); }
   .lg.zone { width: 12px; height: 12px; border: 1px dashed rgba(74,140,255,.7); border-radius: 50%; }
   .lg.park { width: 11px; height: 11px; border: 1px solid var(--fg); border-radius: 2px; }
-  .stop .tel { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
-  .stop .tel a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  .stop .where a.tel { padding: 4px 8px; }
+  .stop .where a.tel svg { width: 14px; height: 14px; }
+  .stop .where a.tel::before { display: none; }
 
   /* ---- "More" folds: background in a few sentences, closed by default ---- */
   .more { margin-top: 10px; }
@@ -511,8 +512,7 @@
       <div class="time">10:15</div>
       <h3 class="title">Drop the bags at L'Hermitage Gantois</h3>
       <p class="note">Ask whether we can leave the bags before check-in. If the room isn't ready, reception keeps them.</p>
-      <p class="tel">Reception <a href="tel:+33320853030">+33 3 20 85 30 30</a></p>
-      <p class="where"><span>224 Rue Pierre Mauroy, 59000 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=L'Hermitage+Gantois+224+Rue+Pierre+Mauroy+Lille" target="_blank" rel="noopener">Open in Maps</a></p>
+      <p class="where"><span>224 Rue Pierre Mauroy, 59000 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=L'Hermitage+Gantois+224+Rue+Pierre+Mauroy+Lille" target="_blank" rel="noopener">Open in Maps</a><a class="tel" href="tel:+33320853030" title="Call the hotel: +33 3 20 85 30 30" aria-label="Call the hotel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2.2 1.3a11 11 0 0 0 6 6L15 13l4 1.5V18a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 4 6.2 2 2 0 0 1 5 4z"/></svg></a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>The building is older than the city's belfry. A wealthy merchant, Jean de la Cambe, known as Gantois, founded it in 1462 as a hospice for the poor, and it kept that role for more than five centuries, until 1995.</p><p>The Flemish façade on Rue Pierre Mauroy is from the 15th century, the chapel still stands, and the four inner courtyards are what the hotel was built around when it opened in 2003. The spa, the massage and breakfast are all inside the old walls.</p></div></details>
     </article>
 
@@ -597,8 +597,7 @@
       <div class="time">19:00</div>
       <h3 class="title">Dinner at Eva Restaurant</h3>
       <p class="note">Franco-Russian inspired. Reservation at 19:00, fixed.</p>
-      <p class="tel">Running late? <a href="tel:+33320294826">+33 3 20 29 48 26</a></p>
-      <p class="where"><span>4 Rue Saint-Étienne, 59800 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=Eva+Restaurant+4+Rue+Saint-Etienne+Lille" target="_blank" rel="noopener">Open in Maps</a></p>
+            <p class="where"><span>4 Rue Saint-Étienne, 59800 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=Eva+Restaurant+4+Rue+Saint-Etienne+Lille" target="_blank" rel="noopener">Open in Maps</a><a class="tel" href="tel:+33320294826" title="Call Eva: +33 3 20 29 48 26" aria-label="Call Eva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.5l1.5 4-2.2 1.3a11 11 0 0 0 6 6L15 13l4 1.5V18a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 4 6.2 2 2 0 0 1 5 4z"/></svg></a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>Eva took over the old Compostelle, a Renaissance townhouse on Rue Saint-Étienne with a glass roof over the main room. The house has been a pilgrims' inn and, during the Occupation, something less respectable.</p><p>The kitchen does contemporary Eastern European cooking, Russian-leaning: salmon koulibiac, pâté en croûte, caramelised blinis, a rose pavlova. Early evening is calm and dressed up; the music rises later on. We'll be in the calm part.</p></div></details>
       <details class="slot" data-slot="sat-after">
         <summary><span class="slot-label">Afterwards, one more glass?</span><span class="slot-pick"></span></summary>
