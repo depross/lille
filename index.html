@@ -53,7 +53,7 @@
   /* ---- header: toggle ---- */
   .top {
     position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
-    background: rgba(0,0,0,.86); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    background: rgba(0,0,0,.96);
     border-bottom: 1px solid var(--line);
   }
   .top-inner {
@@ -902,9 +902,10 @@
       hero.style.minHeight = Math.max(420, Math.round(full - headerBottom + 8)) + 'px';
     }
     fit();
-    window.addEventListener('resize', fit);
-    window.addEventListener('orientationchange', function () { setTimeout(fit, 300); });
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
+    // Only re-measure when the phone actually rotates; Safari's toolbar collapsing fires resize too, and refitting then makes the scroll stutter.
+    var lastW = window.innerWidth;
+    window.addEventListener('resize', function () { if (window.innerWidth !== lastW) { lastW = window.innerWidth; setTimeout(fit, 300); } });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   })();
 
   /* ---- car toggle ---- */
@@ -1092,7 +1093,7 @@
   update();
   setInterval(function () { if (PREVIEW) update(); }, 1000);
   setInterval(update, 30000);
-  window.addEventListener('resize', update);
+  (function () { var w = window.innerWidth; window.addEventListener('resize', function () { if (window.innerWidth !== w) { w = window.innerWidth; update(); } }); })();
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(update); }
 
 
