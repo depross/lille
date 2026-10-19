@@ -104,8 +104,8 @@
   .hero {
     display: grid; justify-items: center; align-content: center; text-align: center; gap: 28px;
     padding-block: 32px 40px;
-    min-height: calc(100vh - 64px - env(safe-area-inset-top, 0px));
-    min-height: calc(100lvh - 64px - env(safe-area-inset-top, 0px));
+    min-height: calc(100vh - 64px + env(safe-area-inset-bottom, 0px));
+    min-height: calc(100lvh - 64px + env(safe-area-inset-bottom, 0px) + 24px);
     box-sizing: border-box; position: relative;
   }
   .hero .scroll-cue { position: absolute; bottom: 14px; left: 50%; width: 1px; height: 28px; background: linear-gradient(var(--dim), transparent); animation: cue 2.4s ease-in-out infinite; }
@@ -900,7 +900,7 @@
     document.body.appendChild(probe);
     function fit() {
       var full = Math.max(probe.getBoundingClientRect().height, window.innerHeight, document.documentElement.clientHeight);
-      hero.style.minHeight = Math.max(420, Math.round(full - top.offsetHeight - (top.getBoundingClientRect().top || 0))) + 'px';
+      hero.style.minHeight = Math.max(420, Math.round(full - top.offsetHeight + 24)) + 'px';
     }
     fit();
     window.addEventListener('resize', fit);
