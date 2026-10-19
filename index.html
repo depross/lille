@@ -151,6 +151,37 @@
   .wxh b { font-weight: 500; color: var(--fg); }
   .wx-note { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
 
+  /* ---- map: schematic, drawn from the real coordinates ---- */
+  .mapsec { padding-block: 26px 10px; display: grid; gap: 14px; }
+  .map-head { display: grid; gap: 4px; }
+  .map-head h2 { margin: 0; font-weight: 300; font-size: 28px; line-height: 1.1; }
+  .map-head .cue { font-family: var(--font-accent); font-style: italic; font-weight: 300; color: var(--muted); font-size: 17px; margin: 0; }
+  .map-wrap { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #060505; }
+  .map { display: block; width: 100%; height: auto; }
+  .map .rt { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+  .map .rt.sat { stroke: var(--fg); stroke-width: 1.6; stroke-dasharray: 6 5; opacity: .9; }
+  .map .rt.sun { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 1.5 5; }
+  .map .pt circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1.2; }
+  .map .pt.station circle { stroke: var(--dim); }
+  .map .pt.park rect { fill: var(--bg); stroke: var(--fg); stroke-width: 1.2; }
+  .map .pt.park .pl { fill: var(--fg); font-family: var(--font-body); font-size: 10px; font-weight: 500; }
+  .map .pt.home circle { stroke: var(--orange); fill: none; }
+  .map .pt.home circle.core { fill: var(--orange); stroke: none; }
+  .map .pt.home circle:first-child { filter: drop-shadow(0 0 6px rgba(232,93,31,.7)); }
+  .map .ml { font-family: var(--font-body); font-size: 11.5px; font-weight: 400; fill: var(--fg); letter-spacing: .02em; }
+  .map .ml.dim { fill: var(--muted); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; }
+  .map .ml.home { font-family: var(--font-accent); font-style: italic; font-size: 14px; fill: var(--fg); }
+  .map .ml.zonel { fill: #4A8CFF; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+  .map .scale line, .map .north line { stroke: var(--muted); stroke-width: 1; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .lg { display: inline-block; width: 22px; height: 0; border-top: 1.6px dashed var(--fg); }
+  .lg.sun { border-top: 1.2px dotted var(--muted); }
+  .lg.zone { width: 12px; height: 12px; border: 1px dashed rgba(74,140,255,.7); border-radius: 50%; }
+  .lg.park { width: 11px; height: 11px; border: 1px solid var(--fg); border-radius: 2px; }
+  .stop .tel { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+  .stop .tel a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+
   /* ---- "More" folds: background in a few sentences, closed by default ---- */
   .more { margin-top: 10px; }
   .more > summary {
@@ -378,6 +409,48 @@
     </details>
   </section>
 
+  <section class="mapsec">
+    <div class="map-head">
+      <h2>On foot</h2>
+      <p class="cue">Everything is within a quarter of an hour of the hotel.</p>
+    </div>
+    <div class="map-wrap">
+<svg class="map" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of the weekend in Lille">
+  <defs>
+    <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#2A2724"/></pattern>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#4A8CFF" stroke-width=".8" opacity=".55"/></pattern>
+  </defs>
+  <rect width="600" height="600" fill="url(#dots)"/>
+  <g class="zone"><circle cx="186" cy="522" r="36" fill="url(#hatch)" stroke="#4A8CFF" stroke-opacity=".5" stroke-dasharray="3 4"/>
+    <text class="ml zonel" x="232" y="526">marathon start · Sun 11:15</text></g>
+  <path class="rt sat" d="M436.0,234.7 Q 360,300 249.2,458.2 Q 150,420 90.5,268.5 L114.6,215.0 L71.3,175.1 L63.2,189.8"/>
+  <path class="rt sat buzz-only" d="M536.8,408.9 Q 400,470 249.2,458.2"/>
+  <path class="rt sun" d="M249.2,458.2 Q 240,120 91.1,63.4 Q 10,290 94.3,503.0 L249.2,458.2"/>
+  <path class="rt sun peugeot-only" d="M249.2,458.2 Q 360,300 436.0,234.7"/>
+  <path class="rt sun buzz-only" d="M249.2,458.2 Q 400,470 536.8,408.9"/>
+  <g class="pt station"><circle cx="313.2" cy="228.0" r="3"/><text class="ml dim" x="320.2" y="232.0" text-anchor="start">Lille Flandres</text></g>
+  <g class="pt park peugeot-only"><rect x="429.0" y="227.7" width="14" height="14" rx="2"/><text class="pl" x="436.0" y="238.2" text-anchor="middle">P</text><text class="ml " x="447.0" y="238.7" text-anchor="start">Euralille</text></g>
+  <g class="pt park buzz-only"><rect x="529.8" y="401.9" width="14" height="14" rx="2"/><text class="pl" x="536.8" y="412.4" text-anchor="middle">P</text><text class="ml " x="547.8" y="412.9" text-anchor="start">Grand Palais</text></g>
+  <g class="pt"><circle cx="114.6" cy="215.0" r="4"/><text class="ml " x="122.6" y="211.0" text-anchor="start">Grand'Place</text></g>
+  <g class="pt"><circle cx="90.5" cy="268.5" r="4"/><text class="ml " x="82.5" y="272.5" text-anchor="end">Rihour</text></g>
+  <g class="pt"><circle cx="71.3" cy="175.1" r="4"/><text class="ml " x="63.3" y="179.1" text-anchor="end">Méert</text></g>
+  <g class="pt"><circle cx="63.2" cy="189.8" r="4"/><text class="ml " x="54.2" y="200.8" text-anchor="end">Eva</text></g>
+  <g class="pt"><circle cx="91.1" cy="63.4" r="4"/><text class="ml " x="99.1" y="67.4" text-anchor="start">Cathedral</text></g>
+  <g class="pt"><circle cx="94.3" cy="503.0" r="4"/><text class="ml " x="102.3" y="517.0" text-anchor="start">Beaux-Arts</text></g>
+  <g class="pt home"><circle cx="249.2" cy="458.2" r="9"/><circle cx="249.2" cy="458.2" r="3" class="core"/><text class="ml home" x="263.2" y="462.2" text-anchor="start">L'Hermitage Gantois</text></g>
+  <g class="scale"><line x1="20" y1="578" x2="223.4" y2="578"/><text class="ml dim" x="20" y="572">500 m</text></g>
+  <g class="north"><text class="ml dim" x="576" y="24" text-anchor="middle">N</text><line x1="576" y1="30" x2="576" y2="46"/></g>
+</svg>
+    </div>
+    <div class="legend">
+      <span><i class="lg sat"></i>Saturday</span>
+      <span><i class="lg sun"></i>Sunday</span>
+      <span><i class="lg zone"></i>Marathon start</span>
+      <span class="peugeot-only"><i class="lg park"></i>Euralille, the Peugeot</span>
+      <span class="buzz-only"><i class="lg park"></i>Grand Palais, the Buzz</span>
+    </div>
+  </section>
+
   <section class="tl" id="timeline">
     <div class="track" aria-hidden="true"></div>
     <div class="track-done" id="track-done" aria-hidden="true"></div>
@@ -411,6 +484,7 @@
       <div class="time">Around 10:00</div>
       <h3 class="title">Park at Euralille</h3>
       <p class="note">Parking Euralille Centre Commercial. Leave the car here for the whole weekend and walk to the hotel with the small bags.</p>
+      <p class="accent">About 15 minutes on foot to the hotel.</p>
       <p class="where"><span>164 Avenue Willy Brandt, 59777 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=Parking+Euralille+Centre+Commercial+164+Avenue+Willy+Brandt+Lille" target="_blank" rel="noopener">Open in Maps</a></p>
     </article>
 
@@ -420,6 +494,7 @@
       <h3 class="title">Park at Lille Grand Palais / Zénith</h3>
       <p class="warn"><b>Provisional.</b> Different entrances and levels may have different height limits. Don't assume it fits because one entrance is tall enough.</p>
       <p class="note">If any point below is unconfirmed, use a car park explicitly confirmed for 1.96 m and accessible during the marathon.</p>
+      <p class="accent">About 12 minutes on foot to the hotel.</p>
       <ul class="mini">
         <li>Entrance clear height at least 1.96 m, with margin</li>
         <li>Route to a space also high enough</li>
@@ -436,6 +511,7 @@
       <div class="time">10:15</div>
       <h3 class="title">Drop the bags at L'Hermitage Gantois</h3>
       <p class="note">Ask whether we can leave the bags before check-in. If the room isn't ready, reception keeps them.</p>
+      <p class="tel">Reception <a href="tel:+33320853030">+33 3 20 85 30 30</a></p>
       <p class="where"><span>224 Rue Pierre Mauroy, 59000 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=L'Hermitage+Gantois+224+Rue+Pierre+Mauroy+Lille" target="_blank" rel="noopener">Open in Maps</a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>The building is older than the city's belfry. A wealthy merchant, Jean de la Cambe, known as Gantois, founded it in 1462 as a hospice for the poor, and it kept that role for more than five centuries, until 1995.</p><p>The Flemish façade on Rue Pierre Mauroy is from the 15th century, the chapel still stands, and the four inner courtyards are what the hotel was built around when it opened in 2003. The spa, the massage and breakfast are all inside the old walls.</p></div></details>
     </article>
@@ -445,7 +521,7 @@
       <div class="time">10:45 – 12:30</div>
       <h3 class="title">Historic Lille</h3>
       <p class="note">Grand'Place and its Flemish façades, the Vieille Bourse next to it, then Place Rihour and the streets around.</p>
-      <p class="accent">Leisurely. Not everything.</p>
+      <p class="accent">Leisurely. Not everything. Grand'Place is 12 minutes from the hotel.</p>
       <p class="where"><a href="https://www.google.com/maps/search/?api=1&query=Grand'Place+Place+du+General+de+Gaulle+Lille" target="_blank" rel="noopener">Grand'Place</a><a href="https://www.google.com/maps/search/?api=1&query=Vieille+Bourse+Lille" target="_blank" rel="noopener">Vieille Bourse</a><a href="https://www.google.com/maps/search/?api=1&query=Place+Rihour+Lille" target="_blank" rel="noopener">Place Rihour</a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>The column in the middle of Grand'Place is the Déesse, raised in 1845 to remember the siege of 1792, when the city held out against the Austrians. The ornate 1930s building with the lettering on the roof is the old Voix du Nord newspaper.</p><p>The Vieille Bourse is twenty-four identical merchants' houses around one courtyard, built in 1652 just before Lille became French. The courtyard is the best bit: second-hand booksellers and chess players most afternoons.</p><p>Place Rihour has the remains of the Dukes of Burgundy's palace, now the tourist office. The streets between it and Grand'Place are the shopping ones.</p></div></details>
     </article>
@@ -499,7 +575,7 @@
       <span class="dot"></span>
       <div class="time">15:15</div>
       <h3 class="title">Back to the hotel</h3>
-      <p class="note">Collect the bags, check in, freshen up.</p>
+      <p class="note">Collect the bags, check in, freshen up. From Méert it's about 14 minutes.</p>
     </article>
 
     <article class="stop" data-t="2026-10-24T16:30">
@@ -513,7 +589,7 @@
       <span class="dot"></span>
       <div class="time">18:35</div>
       <h3 class="title">Walk to Eva</h3>
-      <p class="note">Check the route and walking time on the day.</p>
+      <p class="note">About 14 minutes: down Rue Pierre Mauroy, across Grand'Place, into Rue Esquermoise. Check the route on the day.</p>
     </article>
 
     <article class="stop" data-t="2026-10-24T19:00">
@@ -521,6 +597,7 @@
       <div class="time">19:00</div>
       <h3 class="title">Dinner at Eva Restaurant</h3>
       <p class="note">Franco-Russian inspired. Reservation at 19:00, fixed.</p>
+      <p class="tel">Running late? <a href="tel:+33320294826">+33 3 20 29 48 26</a></p>
       <p class="where"><span>4 Rue Saint-Étienne, 59800 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=Eva+Restaurant+4+Rue+Saint-Etienne+Lille" target="_blank" rel="noopener">Open in Maps</a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>Eva took over the old Compostelle, a Renaissance townhouse on Rue Saint-Étienne with a glass roof over the main room. The house has been a pilgrims' inn and, during the Occupation, something less respectable.</p><p>The kitchen does contemporary Eastern European cooking, Russian-leaning: salmon koulibiac, pâté en croûte, caramelised blinis, a rose pavlova. Early evening is calm and dressed up; the music rises later on. We'll be in the calm part.</p></div></details>
       <details class="slot" data-slot="sat-after">
@@ -586,7 +663,7 @@
       <span class="dot"></span>
       <div class="time">11:30 – 12:45</div>
       <h3 class="title">Walk through Vieux-Lille</h3>
-      <p class="note">The streets we didn't take on Saturday, the cathedral, a coffee. On foot everything stays reachable; crossing the course just means waiting for a gap.</p>
+      <p class="note">The streets we didn't take on Saturday, the cathedral, a coffee. On foot everything stays reachable; crossing the course just means waiting for a gap. The cathedral is 17 minutes from the hotel, and 18 from there to the museum.</p>
       <details class="more"><summary>More</summary><div class="more-body"><p>Notre-Dame-de-la-Treille took 145 years. Begun in 1854 in neo-Gothic, abandoned with a temporary brick front, and only finished in 1999 with a thin marble façade that looks grey from outside and glows orange-pink from inside when the light is right. Go in for that.</p></div></details>
       <details class="slot" data-slot="sun-coffee">
         <summary><span class="slot-label">Coffee, two doors from the hotel</span><span class="slot-pick"></span></summary>
@@ -652,7 +729,7 @@
       <span class="dot"></span>
       <div class="time">13:30 – 15:00</div>
       <h3 class="title">Palais des Beaux-Arts</h3>
-      <p class="note">Open Sunday 10:00 to 18:00, €7 each. One of the largest collections in France: Flemish and Dutch masters, Rubens, Goya, Rodin. It sits on Place de la République, right beside the marathon start, so expect crowds around it and go in from the square.</p>
+      <p class="note">Open Sunday 10:00 to 18:00, €7 each. One of the largest collections in France: Flemish and Dutch masters, Rubens, Goya, Rodin. It sits on Place de la République, right beside the marathon start, so expect crowds around it and go in from the square. Seven minutes from the hotel.</p>
       <p class="accent">Smaller option: Musée de l'Hospice Comtesse in Vieux-Lille. Check its Sunday hours on the day.</p>
       <p class="where"><span>Place de la République, 59000 Lille</span><a href="https://www.google.com/maps/search/?api=1&query=Palais+des+Beaux-Arts+de+Lille+Place+de+la+Republique" target="_blank" rel="noopener">Open in Maps</a></p>
       <details class="more"><summary>More</summary><div class="more-body"><p>Opened in 1892 in a palace built for the purpose, and still counted as the second museum of France after the Louvre. Rubens and Van Dyck upstairs, Goya's two famous old women, Delacroix, Courbet, and the Impressionists in a smaller room.</p><p>The basement has something unexpected: the relief plans, enormous 18th-century scale models of the fortified towns of the north, Lille included. Ninety minutes is enough if we pick two floors and don't try to do everything.</p></div></details>
@@ -662,14 +739,14 @@
       <span class="dot"></span>
       <div class="time">15:15</div>
       <h3 class="title">Collect the bags, walk to Euralille</h3>
-      <p class="note">Euralille stays accessible during the marathon. Follow the diversions in force on the day.</p>
+      <p class="note">About 15 minutes on foot. Euralille stays accessible during the marathon; follow the diversions in force on the day.</p>
     </article>
 
     <article class="stop buzz-only" data-t="2026-10-25T15:15">
       <span class="dot"></span>
       <div class="time">15:15</div>
       <h3 class="title">Collect the bags and the Buzz</h3>
-      <p class="note">Back to Lille Grand Palais / Zénith, only if the Sunday exit was confirmed. Follow the diversions in force on the day.</p>
+      <p class="note">About 12 minutes on foot. Back to Lille Grand Palais / Zénith, only if the Sunday exit was confirmed; follow the diversions in force on the day.</p>
     </article>
 
     <article class="stop" data-t="2026-10-25T15:45">
